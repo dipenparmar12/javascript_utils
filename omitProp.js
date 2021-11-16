@@ -14,3 +14,22 @@ function omitProp(obj = {}, deleteKey) {
 }
 
 export default omitProp
+
+
+/**
+ * @param {{}} obj
+ * @param {string} deleteKey
+ * @src https://stackoverflow.com/a/56030135/8592918
+ */
+export const removeProperty = ({ [propKey]: propValue, ...rest },propKey) =>
+  rest
+
+/**
+ * @param {{}} obj
+ * @param {string} deleteKey
+ * @src https://stackoverflow.com/a/56030135/8592918
+ */
+export const removeProperties = (object, ...keys) =>
+  keys.length
+    ? removeProperties(object, removeProperty(keys.pop()), ...keys)
+    : object
