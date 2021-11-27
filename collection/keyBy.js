@@ -1,5 +1,5 @@
 /**
- *
+ * Convert an array of objects to a single object (duplicate of toObject)
  * @param {*} data
  * @param {*} key
  * @returns

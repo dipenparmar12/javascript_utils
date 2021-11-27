@@ -16,6 +16,11 @@ function shuffle(arr, maxLength = 3) {
   return output
 }
 
+// @src https://1loc.dev/array/shuffle-an-array/
+// function shuffle(arr) {
+//   return arr.sort(() => 0.5 - Math.random())
+// }
+
 //  Modify orignal array
 // function shuffle(arr) {
 //   let last = arr.length

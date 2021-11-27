@@ -16,3 +16,9 @@ export default function get(obj, path, fallback, index) {
 
   return obj === undefined ? fallback : obj
 }
+
+// get({ a: { b: 'Hello World' } }, 'a.b') // 'Hello World';
+
+// @src: https://1loc.dev/object/get-the-value-at-given-path-of-an-object/
+// const getValue = (obj, path) =>
+//   path.split('.').reduce((acc, c) => acc && acc[c], obj)

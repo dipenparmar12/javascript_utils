@@ -1,19 +1,38 @@
 console.clear()
 console.log('Date', new Date().toISOString())
 
-function test(n, arr) {
-  console.log(n, arr)
+function test(input, output) {
+  return 
 }
 
 console.log(
-  1,
-  // 
-  test(),
+  1
+  //
+  // test(people, 'age', 'desc'),
 )
-
+console.warn('')
 /*    
 
 */
+
+// function sortBy(collection, key, order = 'asc') {
+//   return collection.sort((a, b) => {
+//     if (order === 'asc') {
+//       return a[key] > b[key] ? 1 : a[key] < b[key] ? -1 : 0
+//     } else {
+//       return a[key] < b[key] ? 1 : a[key] > b[key] ? -1 : 0
+//     }
+//   })
+// }
+// const people = [
+//   { name: 'Foo', age: 42 },
+//   { name: 'Bar', age: 24 },
+//   { name: 'Fuzz', age: 36 },
+//   { name: 'Baz', age: 32 },
+// ]
+// sortBy(people, 'age', 'desc')
+
+
 
 // str="abd abe ababca aec abc cba"
 // find='abc'
