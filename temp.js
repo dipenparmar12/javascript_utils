@@ -79,3 +79,9 @@ var testInventory = [
   { name: 'apple', qty: 3, dry: true },
   { name: 'kivi', qty: 10, dry: true },
 ]
+
+const groupBy = (arr, key) =>
+  arr.reduce(
+    (acc, item) => ((acc[item[key]] = [...(acc[item[key]] || []), item]), acc),
+    {},
+  )
