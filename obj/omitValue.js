@@ -1,10 +1,10 @@
 /**
  *
  * @param {*} obj
- * @param {*} values
+ * @param {String|String[]} values
  * @returns {*} obj
  */
-function removeValues(obj, values, recursive) {
+function omitValue(obj, values, recursive) {
   let newObj = {}
   Array.isArray(values) || (values = [values])
   Object.keys(obj).forEach((prop) => {
@@ -15,4 +15,4 @@ function removeValues(obj, values, recursive) {
   return newObj
 }
 
-export default removeValues
+export default omitValue
