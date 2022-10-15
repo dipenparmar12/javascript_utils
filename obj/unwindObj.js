@@ -1,4 +1,3 @@
-
 /**
  * @param {Object} obj - Array of objects on which unwind will occur.
  * @param {String} key  key is used to unwind the object.

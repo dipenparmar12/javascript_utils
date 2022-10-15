@@ -1,21 +1,30 @@
 import { format } from 'date-fns'
-
 /**
  * @param {*} date
- * @param {string} d_format
- * @param error
+ * @param {string} formatStr
+ * @param fallback
  * @doc https://date-fns.org/v2.22.1/docs/format
  */
-function format_date(date, d_format = 'd MMM yyy', error) {
+const formatDate = (date, formatStr = 'd MMM yyy', fallback = null) => {
   try {
-    if (!date) return null
+    if (!date) return fallback
     return typeof date.getMonth === 'function' // determine given date is DateObject or stringDate
-      ? format(date, d_format)
-      : format(new Date(date), d_format)
+      ? format(date, formatStr)
+      : format(new Date(date), formatStr)
   } catch (e) {
     console.log('format_date.js::14 e', e)
-    return error
+    return fallback
   }
 }
 
-export default format_date
+export default formatDate
+
+// /**
+//  * @param {*} date
+//  * @param {string} date
+//  */
+// export const parseDate = (date) => {
+//   return typeof date?.getMonth === 'function' // determine given date is DateObject or stringDate
+//     ? date
+//     : new Date(date)
+// }

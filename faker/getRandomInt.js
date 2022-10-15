@@ -5,6 +5,8 @@
  * @returns Integer
  * @desc Returns a random number between min (inclusive) and max (exclusive)
  * @src https://stackoverflow.com/a/1527820/8592918
+ * @example getRandomInt(1, 10) //  1 to 10
+ * @example getRandomInt(400, 500) //  400 to 500
  */
 function getRandomInt(min = 0, max = 1000) {
   min = Math.ceil(min)

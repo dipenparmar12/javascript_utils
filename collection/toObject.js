@@ -1,11 +1,12 @@
 /**
  * Convert an array of objects to a single object (duplicate of keyBy)
- * @param {*} arr
- * @param {*} key
+ * @param {Array} arr
+ * @param {String} key
  * @returns {Object} obj
  * @src https://1loc.dev/array/convert-an-array-of-objects-to-a-single-object/
  */
 function toObject(arr, key) {
+  if (arr.length === 0) return {}
   return arr.reduce((a, b) => ({ ...a, [b[key]]: b }), {})
 }
 // // Or

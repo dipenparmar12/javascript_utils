@@ -1,40 +1,42 @@
 /* eslint-disable */
 /**
- *
  * Query String builder from object or nested objects.
  * @param {Object} initialObj
  * @return {String}
+ * @src https://stackoverflow.com/a/66330140
  */
 function queryEncoder(initialObj = {}) {
   if (!initialObj) return ''
-  const reducer = (obj, parentPrefix = null) => (prev, key) => {
-    const val = obj[key]
-    key = encodeURIComponent(key)
-    const prefix = parentPrefix ? `${parentPrefix}[${key}]` : key
+  const reducer =
+    (obj, parentPrefix = null) =>
+    (prev, key) => {
+      const val = obj[key]
+      key = encodeURIComponent(key)
+      const prefix = parentPrefix ? `${parentPrefix}[${key}]` : key
 
-    if (val == null || typeof val === 'function') {
-      prev.push(`${prefix}=`)
+      if (val === null || typeof val === 'function') {
+        prev.push(`${prefix}=`)
+        return prev
+      }
+
+      /// handle str,num, bool
+      if (['string', 'number', 'boolean'].includes(typeof val)) {
+        prev.push(`${prefix}=${encodeURIComponent(val)}`)
+        return prev
+      }
+
+      /// handle Date Type (send TimeStamp
+      if (typeof val === 'object' && val instanceof Date) {
+        const onlyDate = val.toISOString().split('T')[0] // 2021-02-26
+
+        // const onlyTime = val.toTimeString().split(' ')[0].replace(/:/g, ':')
+        prev.push(`${prefix}=${encodeURIComponent(onlyDate)}`)
+        return prev
+      }
+
+      prev.push(Object.keys(val).reduce(reducer(val, prefix), []).join('&'))
       return prev
     }
-
-    /// handle str,num, bool
-    if (['string', 'number', 'boolean'].includes(typeof val)) {
-      prev.push(`${prefix}=${encodeURIComponent(val)}`)
-      return prev
-    }
-
-    /// handle Date Type (send TimeStamp
-    if (typeof val === 'object' && val instanceof Date) {
-      const onlyDate = val.toISOString().split('T')[0] // 2021-02-26
-
-      // const onlyTime = val.toTimeString().split(' ')[0].replace(/:/g, ':')
-      prev.push(`${prefix}=${encodeURIComponent(onlyDate)}`)
-      return prev
-    }
-
-    prev.push(Object.keys(val).reduce(reducer(val, prefix), []).join('&'))
-    return prev
-  }
 
   return Object.keys(initialObj).reduce(reducer(initialObj), []).join('&')
 }

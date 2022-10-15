@@ -1,3 +1,41 @@
+// Query params get, set, omit, and  reset
+let queryString = {
+  get: () => {},
+  set: () => {},
+  omit: () => {},
+  reset: () => {},
+}
+
+if (typeof window !== 'undefined') {
+  queryString = {
+    get: () =>
+      Object.fromEntries(new URLSearchParams(window?.location?.search)),
+    set: (obj) => {
+      const params = new URLSearchParams(window?.location?.search)
+      Object.entries(obj).forEach(([key, value]) => {
+        params.set(key, value)
+      })
+      window.history.pushState(null, null, `?${params.toString()}`)
+    },
+    omit: (key) => {
+      const query = queryString.get()
+      delete query[key]
+      window.history.pushState(null, null, `?${new URLSearchParams(query)}`)
+    },
+    reset: () => {
+      window.history.pushState(null, null, location.pathname)
+    },
+  }
+}
+
+export default qryParams
+
+// @src https://stackoverflow.com/a/22753103/8592918
+export function clearQueryParams() {
+  window.history.pushState({}, document.title, '?')
+  // document.location.pathname
+}
+
 /**
  *
  * @param {*} url
@@ -77,4 +115,14 @@ export function updateUrlQryParams(obj) {
   })
   // Replace current querystring with the new one.
   window.history.replaceState(null, null, '?' + queryParams.toString())
+}
+
+/**
+ * Omit specified keys from ULR query string
+ * @param {String} key
+ */
+export function omitQueryParam(key) {
+  const url = new URL(window.location.href)
+  url.searchParams.delete(key)
+  window.location.href = url.href
 }

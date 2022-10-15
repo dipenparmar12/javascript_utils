@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /**
  *
  * @param {*} obj
@@ -5,11 +6,11 @@
  * @returns {*} obj
  */
 function omitVal(obj, vals, ...args) {
-  let newObj = {}
+  const newObj = {}
   Array.isArray(vals) || (vals = [vals])
   if (args) vals.splice(vals.length, 0, ...args)
 
-  Object.keys(obj).forEach((prop) => {
+  Object.keys(obj || {}).forEach((prop) => {
     if (!vals.includes(obj[prop])) {
       newObj[prop] = obj[prop]
     }
@@ -38,7 +39,7 @@ export default omitVal
 /*
 
 // omitVal(testObj, null, undefined, '')
-// fal: false, tr: true, id: 'id1', name: 'name2', one: 1, …}
+// fal: false, tr: true, id: 'id1', name: 'name2', one: 1,}
 
 // omitVal(testObj, null, undefined, '', false)
 // {tr: true, id: 'id1', name: 'name2', one: 1, date: '2021-12-20'}

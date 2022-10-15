@@ -1,24 +1,41 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-param-reassign */
 /**
  * Get value from a deeply nested object using a string path.
- * Memoizes the value.
- * @param obj - the object
- * @param path - the string path <user.name | user.car.color>
- * @param fallback
- * @param index
+ * @param {*} object The object to query.
+ * @param {Array|string} path (): The path of the property to get.
+ * @param {*} defaultValue The value returned for undefined resolved values.
+ * @returns {*} Returns the resolved value.
+ * @example
+ * ```
+ * const object = { a: { b: { c: 3 } } }
+ * get(object, 'a.b.c')
+ * // => 3
+ * ```
+ * @example
+ * ```
+ * const object = { a: [{ b: { c: 3 } }] }
+ * get(object, 'a[0].b.c')
+ * // => 3
+ * ```
+ * @example
+ * ```
+ * const object = { a: [{ b: { c: 3 } }] }
+ * get(object, 'a[0].b.c', 'default')
+ * // => 3
+ * ```
  */
-export default function get(obj, path, fallback, index) {
-  const key = typeof path === 'string' ? path.split('.') : [path]
-
-  for (index = 0; index < key.length; index += 1) {
-    if (!obj) break
-    obj = obj[key[index]]
+function get(object, path, defaultValue) {
+  let paths = []
+  const isString = typeof path === 'string'
+  paths = isString ? path.replace(/\[(\d+)\]/g, '.$1').split('.') : path
+  let result = object
+  let i = 0
+  const { length } = paths
+  while (result != null && i < length) {
+    result = result[paths[i++]]
   }
-
-  return obj === undefined ? fallback : obj
+  return result == null || i !== length ? defaultValue : result
 }
 
-// get({ a: { b: 'Hello World' } }, 'a.b') // 'Hello World';
-
-// @src: https://1loc.dev/object/get-the-value-at-given-path-of-an-object/
-// const getValue = (obj, path) =>
-//   path.split('.').reduce((acc, c) => acc && acc[c], obj)
+export default get
