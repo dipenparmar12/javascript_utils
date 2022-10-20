@@ -20,3 +20,26 @@ function insertUnique(collection, newObj, key = 'id') {
 }
 
 export default insertUnique
+
+
+
+/* 
+========================================================
+  example
+======================================================== 
+
+users = [
+  { id: 1, name: 'dipen' },
+  { id: 2, name: 'john' },
+]
+
+usersUpdated = insertUnique(users, { id: 3, name: 'Mike' }, 'id')
+// usersUpdated = [
+//   { id: 1, name: 'dipen' },
+//   { id: 3, name: 'Mike' }, // Inserted at index 1
+//   { id: 2, name: 'john' },
+// ]
+
+insertUnique(users, { id: 1, name: 'dipen' }, 'id') // nothing will change, since entry already exist with id=1 will return same result
+
+*/
