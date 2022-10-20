@@ -15,19 +15,23 @@ function findVal(arrOfObj, key, values, ...args) {
 
 export default findVal
 
-// var testInventory = [
-//   { name: 'apples', qty: 2, dry: true },
-//   { name: 'bananas', qty: 0, dry: false },
-//   { name: 'cherries', qty: 5, dry: false },
-//   { name: 'cherries', qty: 2, dry: true },
-//   { name: 'apple', qty: 3, dry: true },
-//   { name: 'kivi', qty: 10, dry: true },
-// ]
+/**
+var testInventory = [
+  { name: 'apples', qty: 2, dry: true },
+  { name: 'bananas', qty: 0, dry: false },
+  { name: 'cherries', qty: 5, dry: false },
+  { name: 'cherries', qty: 2, dry: true },
+  { name: 'apple', qty: 3, dry: true },
+  { name: 'kivi', qty: 10, dry: true },
+]
 
-// findVal(testInventory, 'name', 'apple') // {name: 'apple', qty: 3, dry: true}
-// findVal(testInventory, 'qty', [0, 2]) // [{name: 'apples', qty: 2, dry: true}, {qry:0,...}]
-// findVal(testInventory, 'qty', [10]) // [{name: 'kivi', qty: 10, dry: true}]
-// findVal(testInventory, 'dry', true) // all obj those have dry=true
+findVal(testInventory, 'name', 'apple') // [{name: 'apple', qty: 3, dry: true}]
+findVal(testInventory, 'qty', [0, 2]) // [{name: 'apples', qty: 2, dry: true}, {qry:0,...}]
+findVal(testInventory, 'qty', [10]) // [{name: 'kivi', qty: 10, dry: true}]
+findVal(testInventory, 'dry', true) // all obj those have dry=true
+
+
+ */
 
 /*
 var findCherries = (fruit) => fruit.name === 'cherries'
