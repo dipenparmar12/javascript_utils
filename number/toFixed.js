@@ -4,6 +4,7 @@
  * @return {Number}
  */
 function toFixed(num, decimals = 1, fallback) {
+  // TODO:: [NaN].includes(NaN)
   // console.log('toFixed.js::[7] ', { num, decimals, fallback })
   try {
     return num.toFixed(decimals) * 1
