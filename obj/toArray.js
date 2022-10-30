@@ -24,12 +24,11 @@ export function isObject(x) {
  * }
  * toArray(ObjCollect, key = 'name')
  * // [
-   //   {"id": 11,"hex": "#000","name": "black"},
-   //   {"id": 22,"hex": "#fff","name": "white"},
-   //   {"id": 33,"hex": "#ccc","name": "gray"}
-   // ]
- */
-
+ * //   {"id": 11,"hex": "#000","name": "black"},
+ * //   {"id": 22,"hex": "#fff","name": "white"},
+ * //   {"id": 33,"hex": "#ccc","name": "gray"}
+ * // ]
+*/
 function toArray(obj, key) {
   if (!obj) return []
   return Object.keys(obj).map((k) => {

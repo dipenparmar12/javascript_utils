@@ -2,6 +2,7 @@
 /* eslint-disable no-bitwise */
 
 // [...Array(100)].map(e => e)
+// Image generator `http://placeimg.com/50/50/people?${Math.random()}`
 
 const Random = {
   bool: () => Math.random() >= 0.5,
