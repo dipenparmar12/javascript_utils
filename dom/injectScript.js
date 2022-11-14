@@ -2,7 +2,8 @@
  * determine given url is relative or not
  * @param {String} src
  * @see https://dev.to/sandrarodgers/add-an-external-script-to-a-vue-component-and-defer-execution-of-logic-on-the-script-4kge
- * @returns
+ * @example 
+ * injectScript('https://cdn.jsdelivr.net/npm/vue@2.7.13', { defer: true })
  */
 function injectScript(src, attrs = {}) {
   const isValidUrl =
@@ -25,3 +26,29 @@ function injectScript(src, attrs = {}) {
 }
 
 export default injectScript
+
+
+/* 
+========================================================
+  Usage example 
+======================================================== 
+
+injectScript('cdn.com/react.js', { defer: true })
+
+  const scripts = {
+    vue_dev_tools: {
+      attrName: 'value',
+      src: 'http://localhost:8098',
+    },
+    plausible_analytics: {
+      attrName: 'value',
+      src: 'https://plausible.io/js/script.hash.js',
+      defer: true,
+    },
+  }
+  Object.values(scripts).forEach((script) => {
+    const { src, ...attrs } = script
+    injectScript(src, attrs)
+  })
+
+*/
