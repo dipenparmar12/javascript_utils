@@ -2,7 +2,9 @@
 /* eslint-disable no-bitwise */
 
 // [...Array(100)].map(e => e)
-// Image generator `http://placeimg.com/50/50/people?${Math.random()}`
+// Image generator 
+//  `http://placeimg.com/50/50/people?${Math.random()}`
+//  `https://picsum.photos/200` `https://picsum.photos/200/300`
 
 const Random = {
   bool: () => Math.random() >= 0.5,
