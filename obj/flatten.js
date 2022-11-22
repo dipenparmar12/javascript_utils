@@ -12,7 +12,7 @@ function flatten(data) {
     if (Object(cur) !== cur) {
       result[prop] = cur
     } else if (Array.isArray(cur)) {
-      result[prop] = JSON.stringify(cur)
+      result[prop] = JSON.stringify(cur) // NOTE:: string casting.
     } else {
       let isEmpty = true
       Object.keys(cur).forEach((p) => {
