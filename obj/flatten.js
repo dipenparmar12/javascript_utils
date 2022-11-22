@@ -1,24 +1,3 @@
-export default function flatten(data) {
-  var result = {}
-  function recurse(cur, prop) {
-    if (Object(cur) !== cur) {
-      result[prop] = cur
-    } else if (Array.isArray(cur)) {
-      for (var i = 0, l = cur.length; i < l; i++) recurse(cur[i], prop + '[' + i + ']')
-      if (l === 0) result[prop] = []
-    } else {
-      var isEmpty = true
-      for (var p in cur) {
-        isEmpty = false
-        recurse(cur[p], prop ? prop + '.' + p : p)
-      }
-      if (isEmpty && prop) result[prop] = {}
-    }
-  }
-  recurse(data, '')
-  return result
-}
-
 /**
  * A function to convert multilevel object to single level object
  * and use key value pairs as Column and row pairs using recursion
@@ -26,7 +5,7 @@ export default function flatten(data) {
  * @returns {VerifyKeyObjectInput}
  * @see https://github.com/appbaseio/reactivecore/blob/master/src/utils/helper.js#L1074
  */
-export const flattenV2 = (data) => {
+const flatten = (data) => {
   const result = {}
 
   function recurse(cur, prop = '') {
@@ -50,7 +29,7 @@ export const flattenV2 = (data) => {
 
   return result
 }
-
+export default flatten
 /* 
 ========================================================
   Usage/Example 
@@ -73,7 +52,7 @@ data = {
   },
 }
 
-flattenV2(data)
+flatten(data)
 // {
 //   "a": 1,
 //   "b": 2,
@@ -87,3 +66,24 @@ flattenV2(data)
 
 flatten(data)
 */
+
+// export default function flatten(data) {
+//   var result = {}
+//   function recurse(cur, prop) {
+//     if (Object(cur) !== cur) {
+//       result[prop] = cur
+//     } else if (Array.isArray(cur)) {
+//       for (var i = 0, l = cur.length; i < l; i++) recurse(cur[i], prop + '[' + i + ']')
+//       if (l === 0) result[prop] = []
+//     } else {
+//       var isEmpty = true
+//       for (var p in cur) {
+//         isEmpty = false
+//         recurse(cur[p], prop ? prop + '.' + p : p)
+//       }
+//       if (isEmpty && prop) result[prop] = {}
+//     }
+//   }
+//   recurse(data, '')
+//   return result
+// }
