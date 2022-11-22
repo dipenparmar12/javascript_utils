@@ -5,7 +5,7 @@
  * @returns {VerifyKeyObjectInput}
  * @see https://github.com/appbaseio/reactivecore/blob/master/src/utils/helper.js#L1074
  */
-const flatten = (data) => {
+function flatten(data) {
   const result = {}
 
   function recurse(cur, prop = '') {
