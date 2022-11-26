@@ -4,6 +4,7 @@ var toString = Object.prototype.toString
  * @param {*} obj
  * @returns {*} obj
  * @src https://stackoverflow.com/a/28876564/8592918
+ * @possible_duplicate_of mergeDeep
  */
 function deepCopy(obj) {
   var rv
