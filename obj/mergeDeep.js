@@ -9,6 +9,7 @@ const isObject = (item) => {
  * @returns {Object}
  * @see https://thewebdev.info/2021/03/06/how-to-deep-merge-javascript-objects/
  * @see https://stackoverflow.com/a/34749873/8592918
+ * @see https://attacomsian.com/blog/javascript-merge-objects
  * @example 
  * 
 const merged = mergeDeep(
