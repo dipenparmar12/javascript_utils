@@ -1,7 +1,15 @@
 /**
- *
+ * Remove empty elements ( {} and Null values ) from an array in Javascript
  * @param {Object} obj
  * @returns {Object} obj
+ * @example
+    let obj = {
+      a: { b: 1, c: { }, },
+      b: {},
+    }
+    clearNullEmpties(obj) // { a: { b : 1} }
+ *
+ *
  */
 function clearNullEmpties(obj) {
   let newObj = {}
