@@ -12,6 +12,8 @@
  * @example (isEqual({ a: 1, b: 2 }, { c: 1, d: 2 })) // false
  * @example (isEqual(null, undefined)) // false
  * @example (isEqual(5, 5)) // true
+ * @example (isEqual({a: {b: {c: [1, 2, 3]}}}, {a: {b: {c: [1, 2, 3]}}})) // true
+ * @example (isEqual({a: {b: {c: [1, 2, 3]}}}, {a: {b: {c: [1, 2, 4]}}})) // false
  *
  */
 function isEqual(object, other) {
@@ -48,3 +50,5 @@ export default isEqual
 // console.log(isEqual({a: 1, b: 2}, {c: 1, d: 2})) // false
 // console.log(isEqual(null, undefined)) // false
 // console.log(isEqual(5, 5)) // true
+// console.log(isEqual({a: {b: {c: [1, 2, 3]}}}, {a: {b: {c: [1, 2, 3]}}})) // true
+// console.log(isEqual({a: {b: {c: [1, 2, 3]}}}, {a: {b: {c: [1, 2, 4]}}})) // false
