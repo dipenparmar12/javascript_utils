@@ -6,9 +6,9 @@
 function groupBy(data, key) {
   if (!data) return []
   return data.reduce((acc, item) => {
-    const group = item[key]
-    acc[group] = acc[group] || []
-    acc[group].push(item)
+    const groupKey = item[key]
+    acc[groupKey] = acc[groupKey] || []
+    acc[groupKey].push(item)
     return acc
   }, {})
 }
