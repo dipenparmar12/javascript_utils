@@ -7,7 +7,8 @@
  */
 function keyBy(data, key) {
   return data?.reduce((acc, obj, currentIndex) => {
-    return { ...acc, [obj[key] || currentIndex]: obj }
+    const _key = [obj[key] || currentIndex]
+    return {...acc, [_key]: obj}
   }, {})
 }
 
