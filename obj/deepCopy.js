@@ -1,13 +1,14 @@
 var toString = Object.prototype.toString
+
 /**
- *
- * @param {*} obj
- * @returns {*} obj
+ * Creates a deep copy of the input object.
  * @src https://stackoverflow.com/a/28876564/8592918
- * @possible_duplicate_of mergeDeep
+ * @param {any} obj - The object to be copied.
+ * @returns {any} - A deep copy of the input object.
  */
 function deepCopy(obj) {
-  var rv
+  let rv
+
   switch (typeof obj) {
     case 'object':
       if (obj === null) {
@@ -28,11 +29,11 @@ function deepCopy(obj) {
             // Clone the RegExp
             rv = new RegExp(obj)
             break
-          // ...probably a few others
+            // ...probably a few others
           default:
             // Some other kind of object, deep-copy its
             // properties into a new object
-            rv = Object.keys(obj).reduce(function (prev, key) {
+            rv = Object.keys(obj).reduce((prev, key) => {
               prev[key] = deepCopy(obj[key])
               return prev
             }, {})
@@ -45,6 +46,7 @@ function deepCopy(obj) {
       rv = obj
       break
   }
+
   return rv
 }
 
