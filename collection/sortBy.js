@@ -16,6 +16,10 @@
  * console.log(sortedPeople); // [{ name: 'Bob', age: 48 }, { name: 'John', age: 32 }, { name: 'Jane', age: 25 }, { name: 'Mary', age: 18 }]
  */
 function sortBy(collection, key, order = 'asc') {
+  if (!Array.isArray(collection)) {
+    throw new Error('collection should be arrays');
+  }
+  
   return collection.sort((a, b) => {
     if (order.toLowerCase() === 'asc') {
       return a[key] > b[key] ? 1 : a[key] < b[key] ? -1 : 0
