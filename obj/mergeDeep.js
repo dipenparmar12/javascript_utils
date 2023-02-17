@@ -145,10 +145,6 @@ export function mergeDeepV2(obj, ...args) {
 // console.log(merged3)
 
 
-const isObject = (item) => {
-  return item && typeof item === 'object' && !Array.isArray(item)
-}
-
 /**
  * Deep merge two objects, merging arrays and their elements recursively.
  * @param {Object} object - The target object to merge into.
@@ -264,3 +260,62 @@ console.log(mergedData);
 //   ],
 // }
 */
+
+
+
+// /**
+//  * Deep merge two objects, merging arrays and their elements recursively.
+//  * @param {Object} object - The target object to merge into.
+//  * @param {Object} source - The source object to merge from.
+//  * @returns {Object} - The merged object.
+//  * @see https://stackoverflow.com/a/34749873/8592918
+//  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+//  * @example
+//  * const target = { a: 1, b: { c: 2 } }
+//  * const source = { b: { d: 3 } }
+//  * const result = deepMergeV2(target, source)
+//  * console.log(result) // { a: 1, b: { c: 2, d: 3 } }
+//  */
+// function deepMergeV2(object, source) {
+//   if (isObject(source)) {
+//     for (const key in source) {
+//       if (isObject(source[key])) {
+//         if (!object[key]) Object.assign(object, { [key]: {} })
+//         deepMergeV2(object[key], source[key])
+//       } else if (Array.isArray(source[key])) {
+//         object[key] = object[key] || []
+//         object[key] = object[key].concat(source[key])
+//       } else {
+//         Object.assign(object, { [key]: source[key] })
+//       }
+//     }
+//   }
+//   return object
+// }
+
+// const data = {
+//   labels: [],
+//   datasets: [
+//     {
+//       data: [],
+//       backgroundColor: ['#a6a6a6','#ed7d31','#5b9bd5','#4472c4','#ffc000',],
+//     },
+//   ],
+// }
+
+// const dataToBeMerged = {
+//   labels: ['Water Heating', 'Equipment', 'Heating', 'Lighting', 'Cooling'],
+//   datasets: [{ data: [100, 200, 300, 500], backgroundColor: [] },]
+// }
+// const mergedData = deepMergeV2(data, dataToBeMerged)
+// console.log(mergedData)
+// // Output should below:
+// `{
+//   "labels": ["Water Heating","Equipment","Heating","Lighting","Cooling"],
+//   "datasets": [
+//     {
+//       "data": [100,200,300,500],
+//       "backgroundColor": ["#a6a6a6","#ed7d31","#5b9bd5","#4472c4","#ffc000"]
+//     }
+//   ]
+// }`
