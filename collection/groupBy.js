@@ -6,6 +6,7 @@
  * @param {Object} [options={omitEmptyKeys: false, setGroupProp: false}] - The options object
  * @param {Boolean} [options.omitEmptyKeys=false] - Whether to omit items with empty or null keys
  * @param {Boolean} [options.setGroupProp=false] - Whether to set the group key in every item of the group
+ * @param {Boolean} [options.callback=key=>key] - Callback handler for each key
  * @returns {Object} An object where each key is the value of the grouping key, and its value is an array of all the items that have that key.
  *
  * @example
@@ -19,28 +20,25 @@
  * // }
  */
 
-function groupBy(
-    data,
-    key,
-    options = {},
-) {
+function groupBy(data, key, options = {}) {
   if (!data) return []
   const {
     omitEmptyKeys = false,
     setGroupProp = false,
-  } = options || {}
+    callback = (key) => key,
+  } = options
 
   return data?.reduce((acc, item) => {
     const groupKey = item[key]
     if (omitEmptyKeys || groupKey === null || groupKey === '') return acc
     // if (setGroupProp) item[key][groupKey] = groupKey
+    const keyModified = callback ? callback?.(groupKey) || groupKey : groupKey
 
-    acc[groupKey] = acc[groupKey] || []
-    acc[groupKey].push(item)
+    acc[keyModified] = acc[keyModified] || []
+    acc[keyModified].push(item)
     return acc
   }, {})
 }
-
 
 /* 
 ========================================================
@@ -68,6 +66,7 @@ function groupBy(
 // }
 
 export default groupBy
+
 
 /*
 /**
