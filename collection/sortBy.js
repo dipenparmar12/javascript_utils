@@ -31,6 +31,60 @@ function sortBy(collection, key, order = 'asc') {
 
 export default sortBy
 
+
+/**
+ * Sorts an array of objects based on the order specified in an object.
+ * @param {Object[]} items - The array of objects to be sorted.
+ * @param {Object} orderObj - The object that specifies the order of the items.
+ * @param {Object} [options={}] - An optional object that can be used to customize the behavior of the function.
+ * @param {string} [options.sourceKey='id'] - The name of the property to be used as the key for sorting the items.
+ * @param {string} [options.orderType='asc'] - The order in which to sort the items. Valid values are 'asc' (ascending) and 'desc' (descending).
+ * @returns {Object[]} The sorted array of objects.
+ *  @example
+ *  let users = [
+ *    { id: 'john', },
+ *    { id: 'mike', },
+ *    { id: 'dipen', },
+ *    { id: 'phil', },
+ *  ];
+ *
+ *  let orderObj = {
+ *    phil:1,
+ *    dipen:4,
+ *    john:3,
+ *    mike:2,
+ *  };
+ *  const usersOrdered = sortBY(users, orderObj, { sourceKey: 'id' });
+ *  console.log(usersOrdered); // [{id:'phil'},{id:'dipen'},{id:'john'},{id:'mike'},]
+ *
+ * @throws {TypeError} If the first parameter is not an array.
+ * @throws {TypeError} If the second parameter is not an object.
+ * @throws {TypeError} If the third parameter is not an object.
+ * @throws {TypeError} If the sourceKey option is not a string.
+ */
+export function sortByV2(items, orderObj, options = {}) {
+  if (!Array.isArray(items)) {
+    throw new TypeError('The first parameter must be an array.');
+  }
+  if (typeof orderObj !== 'object') {
+    throw new TypeError('The second parameter must be an object.');
+  }
+  if (typeof options !== 'object') {
+    throw new TypeError('The third parameter must be an object.');
+  }
+  const {sourceKey = 'id', orderType = 'asc'} = options;
+  if (typeof sourceKey !== 'string') {
+    throw new TypeError('The sourceKey option must be a string.');
+  }
+  if (orderType.toLowerCase() !== 'asc' && orderType.toLowerCase() !== 'desc') {
+    throw new TypeError("The orderType option must be 'asc' or 'desc'.");
+  }
+  const sortFn = orderType.toLowerCase() === 'desc'
+      ? (a, b) => orderObj[b[sourceKey]] - orderObj[a[sourceKey]]
+      : (a, b) => orderObj[a[sourceKey]] - orderObj[b[sourceKey]];
+  return items.sort(sortFn);
+}
+
 /*
 const people = [
     { name: 'Foo', age: 42 },
