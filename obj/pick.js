@@ -2,7 +2,9 @@
  * Create an object composed of the picked object properties
  * @param {Object} object
  * @param {string|String[]} keys
+ * @param {...string} args
  * @returns {Object}
+ * @throws {TypeError} if the first argument is not an object or the second argument is not a string or an array of strings.
  * @example
  * ```
  * const object = { a: 1, b: 2, c: 3 }
@@ -22,7 +24,20 @@
  * // => { a: 1, b: 2 }
  * ```
  */
-function pick(object, keys, ...args) {
+export default function pick(object, keys, ...args) {
+  if (typeof object !== 'object' || object === null || Array.isArray(object)) {
+    throw new TypeError('The first argument must be an object')
+  }
+  if (
+    typeof keys !== 'string' &&
+    !Array.isArray(keys) &&
+    !Array.isArray(args)
+  ) {
+    throw new TypeError(
+      'The second argument must be a string or an array of strings'
+    )
+  }
+
   Array.isArray(keys) || (keys = [keys])
   if (args) keys.splice(keys.length, 0, ...args) // merge two keys
 
