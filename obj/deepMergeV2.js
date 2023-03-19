@@ -4,24 +4,55 @@
  * @param {Object} target - The target object to merge the properties into.
  * @param {Object} source - The source object to merge the properties from.
  * @returns {Object} The merged object.
+ * @example
+ * target = {
+ *   name: 'John',
+ *   age: 30,
+ *   address: {
+ *     state: 'NY'
+ *     city: 'New York',
+ *   }
+ * };
+ *
+ * source = {
+ *   age: 35,
+ *   address: {
+ *     state: 'CA',
+ *     zip: '90210'
+ *   }
+ * };
+ * const merged = deepMergeV2(target, source);
+ * console.log(merged);
+ * // Output: {
+ * //   name: 'John',
+ * //   age: 35,
+ * //   address: {
+ * //     city: 'New York',
+ * //     state: 'CA',
+ * //     zip: '90210'
+ * //   }
+ * // }
  */
 function deepMergeV2(target, source) {
-// Create a copy of the source object to prevent modification of the original object
-  const newSource = JSON.parse(JSON.stringify(source));
+  // Create a copy of the source object to prevent modification of the original object
+  const newSource = JSON.parse(JSON.stringify(source))
 
   // Loop through each key in the newSource object
   for (const key in newSource) {
     if (Object.prototype.hasOwnProperty.call(newSource, key)) {
       // If the key exists in both objects, recursively merge the values
-      if (typeof target[key] === "object" && typeof newSource[key] === "object") {
-        deepMergeV2(target[key], newSource[key]);
+      if (
+        typeof target[key] === 'object' &&
+        typeof newSource[key] === 'object'
+      ) {
+        deepMergeV2(target[key], newSource[key])
       } else {
         // Otherwise, assign the value of the key in newSource to the key in target
-        target[key] = newSource[key];
+        target[key] = newSource[key]
       }
     }
   }
-  return target;
+  return target
 }
 
 export default deepMergeV2
