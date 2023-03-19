@@ -20,11 +20,13 @@ function mapRelations(data, relations, options = {}) {
   } = options;
 
   if (!Array.isArray(data) || !Array.isArray(relations)) {
-    throw new Error('Both data and relations should be arrays');
+    console.error('mapRelations[23]:', { data, relations })
+    throw new Error('Both data and relations should be arrays')
   }
 
   if (!dataKey || !relationKey || !targetKey) {
-    throw new Error('dataKey, relationKey and targetKey should be provided');
+    console.error('mapRelations[28]:', { dataKey, relationKey, targetKey })
+    throw new Error('dataKey, relationKey and targetKey should be provided')
   }
 
   return data.map(item => {
