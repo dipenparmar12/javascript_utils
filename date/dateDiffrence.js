@@ -6,6 +6,25 @@
  * @returns
  */
 function differenceOfDates(d1, d2, unit) {
+  // console.log('dateDiffrence.js::[9] d1', d1)
+  // console.log('dateDiffrence.js::[10] d2', d2)
+  // console.log('dateDiffrence.js::[11] unit', unit)
+
+  //  Input validations
+  if (typeof d1?.getMonth !== 'function') {
+    throw `${d1}:: Invalid date`
+  }
+  if (typeof d2?.getMonth !== 'function') {
+    throw `${d2}:: Invalid date`
+  }
+
+  const units = ['years', 'months', 'days', 'hours', 'minutes', 'seconds']
+  if (!units.includes(unit)) {
+    throw `${unit}:: Invalid unit, Unit must be one of following ${units.join(
+      ', ',
+    )}`
+  }
+
   const diff = d2.getTime() - d1.getTime()
   switch (unit) {
     case 'years':
