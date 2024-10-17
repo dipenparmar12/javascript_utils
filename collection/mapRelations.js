@@ -7,7 +7,7 @@
  * @param {string} [options.relationKey='id'] - The key to use as the shared key for the related items.
  * @param {string} [options.targetKey='relations'] - The key to use for the merged related items in each data item.
  * @param {boolean} [options.isOneToOne=false] - Indicates if the relation is one-to-one instead of one-to-many.
- * @param {Function} [options.callback=(item)=>item] - Callback handler for each item
+ * @param {Function} [options.callback=(i)=>i] - Callback handler for each item
  * @returns {Array} - The merged array of data items.
  */
 function mapRelations(data, relations, options = {}) {
@@ -16,8 +16,8 @@ function mapRelations(data, relations, options = {}) {
     relationKey = 'id',
     targetKey = 'relations',
     isOneToOne = false,
-    callback = (item) => item
-  } = options;
+    callback = (i) => i,
+  } = options
 
   if (!Array.isArray(data) || !Array.isArray(relations)) {
     console.error('mapRelations[23]:', { data, relations })
@@ -29,20 +29,22 @@ function mapRelations(data, relations, options = {}) {
     throw new Error('dataKey, relationKey and targetKey should be provided')
   }
 
-  return data.map(item => {
-    const matchingRelations = relations.filter(rel => rel[relationKey] === item[dataKey]);
+  return data.map((item) => {
+    const matchingRelations = relations.filter(
+      (rel) => rel[relationKey] === item[dataKey],
+    )
     let _item = item
     if (matchingRelations.length) {
-      const mergedItem = {...item};
-      mergedItem[targetKey] = isOneToOne ? matchingRelations[0] : matchingRelations;
-      _item = mergedItem;
+      const mergedItem = { ...item }
+      mergedItem[targetKey] = isOneToOne
+        ? matchingRelations[0]
+        : matchingRelations
+      _item = mergedItem
     }
     if (callback) callback?.(_item)
-    return _item;
-  });
+    return _item
+  })
 }
-
-export default mapRelations
 
 export default mapRelations
 
