@@ -1,4 +1,4 @@
-var toString = Object.prototype.toString
+let toString = Object.prototype.toString
 
 /**
  * Creates a deep copy of the input object.
@@ -29,7 +29,7 @@ function deepCopy(obj) {
             // Clone the RegExp
             rv = new RegExp(obj)
             break
-            // ...probably a few others
+          // ...probably a few others
           default:
             // Some other kind of object, deep-copy its
             // properties into a new object
