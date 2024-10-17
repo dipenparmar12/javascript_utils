@@ -4,18 +4,17 @@
  * @returns
  * @src: https://javascript.info/promisify
  */
-function promisify(func) {
+function promisify(f, manyArgs = false) {
   return function (...args) {
-    // return a wrapper-function (*)
     return new Promise((resolve, reject) => {
-      function callback(err, result) {
-        // our custom callback for f (**)
-        err ? reject(err) : resolve(result)
+      function callback(err, ...results) {
+        // our custom callback for f
+        err ? reject(err) : resolve(manyArgs ? results : results[0]) // resolve with all callback results if manyArgs is specified
       }
 
-      args.push(callback) // append our custom callback to the end of f arguments
+      args.push(callback)
 
-      func.call(this, ...args) // call the original function
+      f.call(this, ...args)
     })
   }
 }
@@ -24,8 +23,7 @@ export default promisify
 
 /**
  * 
- * usage:
+usage:
 f = promisify(f, true);
 f(...).then(arrayOfResults => ..., err => ...);
-
 */
