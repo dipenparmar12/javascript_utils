@@ -1,35 +1,33 @@
 /**
- * @param {number | bigint} num
- * @param {string} currency
+ * @param {number | bigint | string} num
  * @param options
- * @src https://stackoverflow.com/a/68536579/8592918,
- *      https://flaviocopes.com/how-to-format-number-as-currency-javascript/
+ * @param locales
+ * @src https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
  */
-function numberFormat(num, currency = 'USD', options = {}) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency,
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-    ...options,
-  }).format(num)
+function numberFormat(num, options, locales) {
+  return new Intl.NumberFormat(locales, options).format(num)
 }
+
+export default numberFormat
 
 /*
 *
 numberFormat(number || 0, {
   minimumSignificantDigits: 4,
-  // localeMatcher?: string;
-  // style?: string;
-  // currency?: string;
-  // currencyDisplay?: string;
-  // useGrouping?: boolean;
-  // minimumIntegerDigits?: number;
-  // minimumFractionDigits?: number;
-  // maximumFractionDigits?: number;
-  // minimumSignificantDigits?: number;
-  // maximumSignificantDigits?: number;
 })
+*
+*
+ options = {
+     localeMatcher?: string;
+      style?: string;
+      currency?: string;
+      currencyDisplay?: string;
+      currencySign?: string;
+      useGrouping?: boolean;
+      minimumIntegerDigits?: number;
+      minimumFractionDigits?: number;
+      maximumFractionDigits?: number;
+      minimumSignificantDigits?: number;
+      maximumSignificantDigits?: number;
+        }
 * */
-
-export default numberFormat
