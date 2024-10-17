@@ -1,4 +1,5 @@
 /* eslint-disable no-plusplus */
+
 /* eslint-disable no-param-reassign */
 /**
  * Get value from a deeply nested object using a string path.
@@ -26,16 +27,21 @@
  * ```
  */
 function get(object, path, defaultValue = undefined) {
-  let paths = []
-  const isString = typeof path === 'string'
-  paths = isString ? path.replace(/\[(\d+)\]/g, '.$1').split('.') : path
-  let result = object
-  let i = 0
-  const { length } = paths
-  while (result != null && i < length) {
-    result = result[paths[i++]]
+  try {
+    let paths = []
+    const isString = typeof path === 'string'
+    paths = isString ? path.replace(/\[(\d+)\]/g, '.$1').split('.') : path
+    let result = object
+    let i = 0
+    const { length } = paths
+    while (result != null && i < length) {
+      result = result[paths[i++]]
+    }
+    return result == null || i !== length ? defaultValue : result
+  } catch (error) {
+    console.error('get[43]:', error, { object, path, defaultValue })
+    throw new Error('src/utils/obj/get.js: Error getting value from object')
   }
-  return result == null || i !== length ? defaultValue : result
 }
 
 export default get
