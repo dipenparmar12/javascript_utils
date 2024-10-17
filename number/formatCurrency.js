@@ -5,14 +5,24 @@
  * @src https://stackoverflow.com/a/68536579/8592918,
  *      https://flaviocopes.com/how-to-format-number-as-currency-javascript/
  */
-function formatCurrency(num, currency = 'USD', options = {}) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency,
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-    ...options,
-  }).format(num)
+function formatCurrency(num, options = {}, currency = 'USD') {
+  // Check if num is a valid number
+  if (isNaN(num)) {
+    return num
+  }
+
+  try {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+      ...options,
+    }).format(num)
+  } catch (error) {
+    console.error('formatCurrency.js::[18] error', error, { options, num })
+    return num
+  }
 }
 
 export default formatCurrency
