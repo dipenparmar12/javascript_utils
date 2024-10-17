@@ -6,7 +6,7 @@
  * @returns {*}
  */
 function insertRemove(collection, newObj, key = 'id') {
-  if (!collection?.findIndex) return collection
+  if (!collection || !collection?.findIndex) return collection
   if (!newObj?.[key]) return collection
 
   const result = [...collection]
