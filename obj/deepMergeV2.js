@@ -13,7 +13,6 @@
  *     city: 'New York',
  *   }
  * };
- *
  * source = {
  *   age: 35,
  *   address: {
@@ -33,29 +32,34 @@
  * //   }
  * // }
  */
-function deepMergeV2(target, source) {
-  // Create a copy of the source object to prevent modification of the original object
-  const newSource = JSON.parse(JSON.stringify(source))
+function deepMergeObjects(target, ...sources) {
+  sources.forEach((source) => {
+    if (source && typeof source === 'object') {
+      // Create a copy of the source object to prevent modification of the original object
+      const newSource = JSON.parse(JSON.stringify(source))
 
-  // Loop through each key in the newSource object
-  for (const key in newSource) {
-    if (Object.prototype.hasOwnProperty.call(newSource, key)) {
-      // If the key exists in both objects, recursively merge the values
-      if (
-        typeof target[key] === 'object' &&
-        typeof newSource[key] === 'object'
-      ) {
-        deepMergeV2(target[key], newSource[key])
-      } else {
-        // Otherwise, assign the value of the key in newSource to the key in target
-        target[key] = newSource[key]
+      // Loop through each key in the newSource object
+      for (const key in newSource) {
+        if (Object.prototype.hasOwnProperty.call(newSource, key)) {
+          // If the key exists in both objects, recursively merge the values
+          if (
+            typeof target[key] === 'object' &&
+            typeof newSource[key] === 'object'
+          ) {
+            deepMergeObjects(target[key], newSource[key])
+          } else {
+            // Otherwise, assign the value of the key in newSource to the key in target
+            target[key] = newSource[key]
+          }
+        }
       }
     }
-  }
+  })
+
   return target
 }
 
-export default deepMergeV2
+export default deepMergeObjects
 
 /*
 // Usage Example
