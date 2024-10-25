@@ -1,8 +1,12 @@
 
 /**
  * Flattens a nested object into a single-level object with dot-separated keys.
- * @param {Object} data - The object to be flattened.
- * @param {string} [prefix=''] - The prefix to use for the flattened keys.
+ * @param {Object} obj - The object to flatten.
+ * @param {Object} [options] - An options object.
+ * @param {number} [options.startAtDepth=1] - The depth at which to start flattening the object.
+ * @param {number} [options.maxDepth=Infinity] - The maximum depth to flatten the object.
+ * @param {number} [currentDepth=0] - The current depth of the object being flattened.
+ * @param {string} [prefix=''] - The prefix to use for the current object level.
  * @returns {Object} The flattened object.
  * @example
  * const nestedObj = {
@@ -30,32 +34,106 @@
  * //   "b.e.g[1]": 7
  * // }
  */
-function flatten(data, prefix = '') {
-  const result = {};
-  for (const [key, value] of Object.entries(data)) {
-    const prop = prefix ? `${prefix}.${key}` : key;
-    if (Object(value) !== value) {
-      result[prop] = value;
-    } else if (Array.isArray(value)) {
-      for (let i = 0; i < value.length; i++) {
-        const arrayProp = `${prop}[${i}]`;
-        if (Object(value[i]) !== value[i]) {
-          result[arrayProp] = value[i];
-        } else {
-          Object.assign(result, flatten(value[i], arrayProp));
-        }
-      }
-      if (value.length === 0) {
-        result[prop] = [];
+function flatten(
+  obj,
+  { startAtDepth = 1, maxDepth = Infinity } = {},
+  currentDepth = 0,
+  prefix = '',
+) {
+
+  // if maxDepth is not a number, set it to Infinity
+  if (typeof maxDepth !== 'number') {
+    maxDepth = Infinity
+  }
+
+  // Helper to determine if we should start flattening at the given depth
+function shouldFlattenAtDepth(currentDepth, startAtDepth) {
+  return currentDepth >= startAtDepth
+}
+
+// Helper to create a consistent property path
+function createPropPath(prefix, key) {
+  return prefix ? `${prefix}.${key}` : key
+}
+
+  const result = shouldFlattenAtDepth(currentDepth, startAtDepth)
+    ? {}
+    : Array.isArray(obj)
+      ? []
+      : {}
+
+  for (const key in obj) {
+    const propPath = Array.isArray(obj)
+      ? `${prefix}[${key}]`
+      : createPropPath(prefix, key)
+    const value = obj[key]
+
+    if (
+      typeof value === 'object' &&
+      value !== null &&
+      currentDepth < maxDepth
+    ) {
+      const flattened = flatten(
+        value,
+        { startAtDepth, maxDepth },
+        currentDepth + 1,
+        propPath,
+      )
+
+      // Handling the transition level where flattening starts
+      if (shouldFlattenAtDepth(currentDepth + 1, startAtDepth)) {
+        Object.assign(result, flattened)
+      } else {
+        result[key] = flattened
       }
     } else {
-      Object.assign(result, flatten(value, prop));
+      if (shouldFlattenAtDepth(currentDepth, startAtDepth)) {
+        result[propPath] = value
+      } else {
+        result[key] = value
+      }
     }
   }
-  return result;
+
+  return result
 }
 
 export default flatten
+
+
+// Test data
+let data = {
+  user: {
+    name: 'JOhn',
+    age: 30,
+    preferences: {
+      color: 'blue',
+      food: 'pizza',
+    },
+    hobbies: ['reading'],
+  },
+  UserMe: {
+    name: 'ME John',
+    age: 31,
+    preferences: {
+      color: 'green',
+      food: 'pizza',
+    },
+    hobbies: ['reading', 'swimming'],
+  },
+};
+
+// Test cases
+console.log(flatten(data));
+
+// Test cases
+console.log(flatten(data), { maxDepth : 1 });
+
+// console.log('Test with startAtDepth: 1');
+// console.log(flatten(data, { startAtDepth: 1 }));
+
+// console.log('\nTest with startAtDepth: 2');
+// console.log(flatten(data, { startAtDepth: 2 }));
 
 /* ------------------------------------
   Example
@@ -83,7 +161,6 @@ export default flatten
   //   "b.e.g[1]": 7
   // }
  */
- ------------------------------------ */
 
 
 /**
@@ -117,7 +194,8 @@ function flattenV2(data) {
 
   return result
 }
-export flattenV2
+
+export { flattenV2 };
 
 /* 
 ========================================================
